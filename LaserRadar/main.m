@@ -36,12 +36,12 @@ while(1)
 	if length(cmd)~=11
 		data = CMDdec(cmd);
 		fprintf("转速：%f\n",data.speed);
-		fprintf("0偏：%f\n",data.zerobias)
-		fprintf("初始角偏：%f\n",data.iniradangle)
-		for i = 1:length(data.strength)
-			fprintf("第%d个信号强度：%f\n",i,data.strength(i))
-			fprintf("第%d个实际距离：%f mm\n",i,data.dis(i))
-		end
+		fprintf("0偏：%f\n",data.zerobias/100)
+		fprintf("初始角偏：%f\n",(data.iniradangle+data.zerobias)/100)
+% 		for i = 1:length(data.strength)
+% 			fprintf("第%d个信号强度：%f\n",i,data.strength(i))
+% 			fprintf("第%d个实际距离：%f mm\n",i,data.dis(i))
+% 		end
 	else
 		cmd = [];
 		continue;
