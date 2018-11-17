@@ -1,0 +1,46 @@
+﻿<controls:MetroWindow  x:Class="MetroWPF.MainWindow"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+            GlowBrush="{DynamicResource AccentColorBrush}"
+            Title="激光雷达数据处理" Height="800" Width="1000" Loaded="MetroWindow_Loaded">
+	<controls:MetroWindow.RightWindowCommands>
+		<controls:WindowCommands>
+			<Button Content="设置" />
+		</controls:WindowCommands>
+	</controls:MetroWindow.RightWindowCommands>
+
+	<TabControl x:Name="tabControl" HorizontalAlignment="Right" Height="770"  VerticalAlignment="Bottom" Width="1000" Margin="0,0,0,0">
+		<TabItem Header="通信控制" Background="#FF344A61" controls:TabControlHelper.UnderlineBrush="#FF4F595B">
+			<Grid Background="#FF344A61" Margin="0,-3,-3,-3">
+				<!--<StackPanel>-->
+				<Border BorderThickness="5" BorderBrush="#FF0BBB9E"  CornerRadius="10,10,10,10" Name="top" Margin="10,10,548,563" Background="#FF0BBB9E">
+					<Grid HorizontalAlignment="Left" Height="151" Margin="5,5,0,-4" VerticalAlignment="Top" Width="367" Background="Transparent">
+						<TextBox x:Name="BaudtextBox" HorizontalAlignment="Left" Height="34" Margin="290,10,-43,0" TextWrapping="Wrap" Text="115200" VerticalAlignment="Top" Width="120" Background="#FF23C7C7" BorderBrush="#FF23C7C7" CaretBrush="#FF23C7C7" Foreground="White" SelectionBrush="#FF23C7C7" FontSize="20"/>
+						<Button x:Name="OpenCloseSerialBtn" Content="打开串口" HorizontalAlignment="Left" Margin="215,97,-43,0" VerticalAlignment="Top" Width="195" Click="OpenCloseSerialBtn_Click" BorderBrush="#FFE8723C" Background="#FFE8723C" Foreground="White" BorderThickness="1"/>
+						<Label Content="波特率" HorizontalAlignment="Left" Margin="215,10,0,0" VerticalAlignment="Top" FontWeight="Bold" Foreground="White" FontSize="20"/>
+						<ListBox x:Name="SerialPortNamelistBox" HorizontalAlignment="Left" Height="35" Margin="85,10,0,0" VerticalAlignment="Top" Width="120" Background="#FF23C7C7" BorderBrush="#FF23C7C7" Foreground="White" FontSize="20" SelectionChanged="SerialPortNamelistBox_SelectionChanged">
+
+						</ListBox>
+						<Label Content="串口" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold" Foreground="White" FontSize="20"/>
+						<TextBox x:Name="ParitytextBox" HorizontalAlignment="Left" Height="34" Margin="290,50,-43,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" Background="#FF23C7C7" BorderBrush="#FF23C7C7" CaretBrush="#FF23C7C7" Foreground="White" SelectionBrush="#FF23C7C7" FontSize="20"/>
+						<Label Content="校验位" HorizontalAlignment="Left" Margin="214,50,0,0" VerticalAlignment="Top" FontWeight="Bold" Foreground="White" FontSize="20"/>
+						<TextBox x:Name="DataBittextBox" HorizontalAlignment="Left" Height="34" Margin="85,50,0,0" TextWrapping="Wrap" Text="8" VerticalAlignment="Top" Width="120
+								 " Background="#FF23C7C7" BorderBrush="#FF23C7C7" CaretBrush="#FF23C7C7" Foreground="White" SelectionBrush="#FF23C7C7" FontSize="20"/>
+						<Label Content="数据位" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" FontWeight="Bold" Foreground="White" FontSize="20"/>
+						<TextBox x:Name="StopBittextBox" HorizontalAlignment="Left" Height="34" Margin="85,90,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120          " Background="#FF23C7C7" BorderBrush="#FF23C7C7" CaretBrush="#FF23C7C7" Foreground="White" SelectionBrush="#FF23C7C7" FontSize="20"/>
+						<Label Content="停止位" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" FontWeight="Bold" Foreground="White" FontSize="20"/>
+					</Grid>
+				</Border>
+
+				<!--</StackPanel>-->
+			</Grid>
+		</TabItem>
+		<TabItem Header="数据处理">
+			<Grid Background="#FFE5E5E5"/>
+
+		</TabItem>
+	</TabControl>
+
+</controls:MetroWindow>
+
