@@ -143,23 +143,9 @@ namespace MetroWPF
 						byte[] tmpdata = recivedatalst.ToArray();
 						rd = new RadarData();
 						rd.BuildRadarData(tmpdata);
-						//if (recivecmdlst.Count<500)
-						//{
-						//	recivecmdlst.Add(tmpdata);
-						//	if (rd.BuildRadarData(tmpdata))
-						//	{
-						//		RadataLst.Add(rd);
-						//	}
-						//}
-						//else
-						//{
-
-						//}
+										
 						asyncOperation.Post(new SendOrPostCallback(ShowReciveDataText), Common.bytes2HexString(ref tmpdata, tmpdata.Length));
-						//data_rc.AppendText(Common.bytes2HexString(ref tmpdata, tmpdata.Length));
-						//data_rc.AppendText("\r\n");
-						//data_rc.SelectionStart = data_rc.Text.Length;
-						//break;
+
 					}
 					else
 					{

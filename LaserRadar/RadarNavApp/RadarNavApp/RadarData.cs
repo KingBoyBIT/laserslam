@@ -24,6 +24,7 @@ namespace RadarNavApp
 		private double radarspeed;
 		private double zeroOffset;
 		private double initAngle;
+		private double[] realangle;
 		
 		#region crc_TABLE
 		private static byte[] aucCRCHi = {
@@ -119,6 +120,8 @@ namespace RadarNavApp
 			addr = 0x00;
 			frametype = 0x61;
 			distance = new double[0];
+			signal = new int[0];
+			realangle = new double[0];
 			zeroOffset = 0;
 			initAngle = 0;
 			crc16 = 0;
@@ -136,10 +139,18 @@ namespace RadarNavApp
 		{
 			return this.initAngle;
 		}
+		public double[] getrealAngle()
+		{
+			return this.realangle;
+		}
 		public bool BuildRadarData(byte[] data)
 		{
 			int result = 0;
 			//帧头判断
+			if (data.Length<6)
+			{
+				return false;
+			}
 			if (data[0]!=0xaa||data[3]!=0x00|| data[4] != 0x61 ||data[5]!=0xad)
 			{
 				result = 1;
@@ -163,14 +174,29 @@ namespace RadarNavApp
 					Array.Copy(paradata, 5, tmpdata, 0, tmpdata.Length);
 
 					this.radarspeed = paradata[0]*0.05;
-					this.zeroOffset = BitConverter.ToInt16(paradata, 1)/100.0;
-					this.initAngle = BitConverter.ToUInt16(paradata, 3)/100.0+this.zeroOffset;
+					short a;
+					a = (short)(paradata[1] * 256 + paradata[2]);
+					if (a > (2 ^ 15))
+						a = (short)(-((short)(a^0xffff) + 1));
+					short b = (short)(paradata[3] * 256 + paradata[4]);
+					this.zeroOffset = (double)a/100.0;
+					this.initAngle = (double)b/100.0+this.zeroOffset;
 					this.distance = new double[tmpdata.Length / 3];
 					this.signal = new int[this.distance.Length];
+					this.realangle = new double[this.distance.Length];
 					for (int i = 0; i < this.distance.Length; i++)
 					{
 						this.distance[i] = (tmpdata[i * 3 + 1] * 256 + tmpdata[i * 3 + 2]) * 0.25;
 						this.signal[i] = tmpdata[i * 3];
+						this.realangle[i] = this.initAngle + (double)(i) / this.distance.Length * 22.5;
+						if (this.realangle[i]>180.0)
+						{
+							this.realangle[i] -= 360;
+						}
+						if (this.realangle[i] < -180.0)
+						{
+							this.realangle[i] += 360;
+						}
 					}
 				}
 				else
