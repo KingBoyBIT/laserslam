@@ -39,7 +39,7 @@ while(1)
 		data = CMDdec(cmd);
 		theta = [theta data.realangle];
 		distance = [distance data.dis];
-		polar(theta/180*pi,distance,'*');
+		polar(theta/360,distance,'*');
 		drawnow
 		if length(theta)>368
 			theta = theta(22:end);

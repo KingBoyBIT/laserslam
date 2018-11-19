@@ -15,12 +15,19 @@ if cmd(1)==hex2dec('aa')
 					a = (cmd(ct))*256 + cmd(ct + 1);a(a>32768)=32768-a(a>32768);
 					data.zerobias=a;ct = ct + 2;
 					data.iniradangle = cmd(ct)*256 + cmd(ct + 1);ct = ct + 2;
-					data.dis = zeros((len-5)/3,1);
+					data.dis = zeros(1,(len-5)/3);
 					data.strength = zeros((len-5)/3,1);
 					tt = 1;
 					for i = 0:3:(len-5-3)
-						data.strength(tt) = cmd(ct+i);
-						data.dis(tt) = (cmd(ct+i+1)*256+cmd(ct+i+2))*0.25;
+						data.strength(1,tt) = cmd(ct+i);
+						data.dis(1,tt) = (cmd(ct+i+1)*256+cmd(ct+i+2))*0.25;
+						data.realangle(1,tt) = (data.iniradangle+data.zerobias)/100+(tt-1)/(length(0:3:(len-5-3)))*22.5;
+						if data.realangle(tt)>180
+							data.realangle(tt) = data.realangle(tt)-360;
+						end
+						if data.realangle(tt)<-180
+							data.realangle(tt) = data.realangle(tt)+360;
+						end
 						tt = tt + 1;
 					end
 					
