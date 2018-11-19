@@ -41,10 +41,10 @@ while(1)
 		distance = [distance data.dis];
 		polar(theta/180*pi,distance,'*');
 		drawnow
-		if length(theta)>368
+		if length(theta)>378
 			theta = theta(22:end);
 		end
-		if length(distance)>368
+		if length(distance)>378
 			distance = distance(22:end);
 		end
 % 		fprintf("×ªËÙ£º%f\n",data.speed);
