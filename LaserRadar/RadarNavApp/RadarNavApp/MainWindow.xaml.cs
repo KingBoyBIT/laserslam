@@ -111,6 +111,8 @@ namespace MetroWPF
 				data_rc.Text = "";
 			}
 		}
+		delegate void setpic(object s);
+
 		void ShowPic(object s)
 		{
 			List<RadarData> data = (List<RadarData>)s;
@@ -120,8 +122,8 @@ namespace MetroWPF
 				double[] distance = data[i].getdis();
 				for (int j = 0; j < realangles.Length; j++)
 				{
-					double x = Math.Cos(realangles[j] / 180 * Math.PI) * distance[j] / 1000;
-					double y = Math.Sin(realangles[j] / 180 * Math.PI) * distance[j] / 1000;
+					double x = Math.Cos(realangles[j] / 180 * Math.PI) * distance[j] / 50 + 100;
+					double y = Math.Sin(realangles[j] / 180 * Math.PI) * distance[j] / 50 + 100;
 					var pt = new Ellipse();
 					pt.SetValue(Canvas.LeftProperty, (double)x);
 					pt.SetValue(Canvas.TopProperty, (double)y);
@@ -129,10 +131,14 @@ namespace MetroWPF
 					pt.Width = 10;
 					pt.Margin = new Thickness(20, 20, 0, 0);
 					pt.Stroke = new SolidColorBrush(Colors.Red);
-
-					//this.PaintCanvas.Children.Add(pt);
+					//this.data_rc.Text = x.ToString();
+					this.PaintCanvas.Children.Add(pt);
+					if (this.PaintCanvas.Children.Count > 50)
+					{
+						this.PaintCanvas.Children.RemoveAt(0);
+					}
 				}
-				
+
 			}
 
 		}
@@ -169,7 +175,7 @@ namespace MetroWPF
 						byte[] tmpdata = recivedatalst.ToArray();
 						rd = new RadarData();
 						rd.BuildRadarData(tmpdata);
-						if (RadataLst.Count>(int)(360/21))
+						if (RadataLst.Count>18)
 						{
 							RadataLst.RemoveAt(0);
 							RadataLst.Add(rd);
@@ -179,7 +185,8 @@ namespace MetroWPF
 							RadataLst.Add(rd);
 						}
 						asyncOperation.Post(new SendOrPostCallback(ShowReciveDataText), Common.bytes2HexString(ref tmpdata, tmpdata.Length));
-						asyncOperation.Post(new SendOrPostCallback(ShowPic), RadataLst);
+						//asyncOperation.Post(new SendOrPostCallback(ShowPic), RadataLst);
+						
 					}
 					else
 					{
@@ -205,7 +212,7 @@ namespace MetroWPF
 
 			//sp.Read(recived_data, 0, sp.ReceivedBytesThreshold);
 			asyncOperation = AsyncOperationManager.CreateOperation(null);
-			asyncOperation2 = AsyncOperationManager.CreateOperation(null);
+			//asyncOperation2 = AsyncOperationManager.CreateOperation(null);
 			ThreadStart start = new ThreadStart(ReciveData);
 			Thread t1 = new Thread(start);  //创建子线程，循环刷新label1
 			
@@ -215,6 +222,7 @@ namespace MetroWPF
 				startrecivedata = true;
 				t1.Start(); //线程开始
 			}
+
 		}
 
 		private void StopReciveDataBtn_Click(object sender, RoutedEventArgs e)
@@ -255,6 +263,35 @@ namespace MetroWPF
 			//Canvas.SetTop(textBlock, 10);
 
 			mainPanel.Children.Add(ell);
+		}
+
+		private void SingleShowPicBtn_Click(object sender, RoutedEventArgs e)
+		{
+			List<RadarData> data = RadataLst;
+			for (int i = 0; i < data.Count; i++)
+			{
+				double[] realangles = data[i].getrealAngle();
+				double[] distance = data[i].getdis();
+				for (int j = 0; j < realangles.Length; j++)
+				{
+					double x = Math.Cos(realangles[j] / 180 * Math.PI) * distance[j] / 10 + 100;
+					double y = Math.Sin(realangles[j] / 180 * Math.PI) * distance[j] / 10 + 100;
+					var pt = new Ellipse();
+					pt.SetValue(Canvas.LeftProperty, (double)x);
+					pt.SetValue(Canvas.TopProperty, (double)y);
+					pt.Height = 10;
+					pt.Width = 10;
+					pt.Margin = new Thickness(20, 20, 0, 0);
+					pt.Stroke = new SolidColorBrush(Colors.Red);
+					//this.data_rc.Text = x.ToString();
+					this.PaintCanvas.Children.Add(pt);
+					if (this.PaintCanvas.Children.Count > RadataLst.Count*21)
+					{
+						this.PaintCanvas.Children.RemoveAt(0);
+					}
+				}
+
+			}
 		}
 	}
 }

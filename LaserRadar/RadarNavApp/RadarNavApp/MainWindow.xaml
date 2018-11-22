@@ -38,6 +38,7 @@
 						<Button x:Name="StopReciveDataBtn" Content="停止接受数据" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" BorderBrush="#FFE8723C" Background="#FFE8723C" Foreground="White" BorderThickness="1" Margin="125,0,0,0" Click="StopReciveDataBtn_Click"/>
 						<TextBox x:Name="data_rc" HorizontalAlignment="Left" Height="491" Margin="0,32,-586,-372" Text="" VerticalAlignment="Top" Width="953" Background="#FF0BBBAB" BorderBrush="#FF0B7C71" AcceptsReturn="True" VerticalScrollBarVisibility="Visible"  HorizontalScrollBarVisibility="Visible"/>
 						<Button x:Name="ClearWindowBtn" Content="清屏" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" BorderBrush="#FFE8723C" Background="#FFE8723C" Foreground="White" BorderThickness="1" Margin="250,0,-3,0" Click="ClearWindowBtn_Click"/>
+						<Button x:Name="SingleShowPicBtn" Content="单次显示雷达数据" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Click="SingleShowPicBtn_Click" BorderBrush="#FFE8723C" Background="#FFE8723C" Foreground="White" BorderThickness="1" Margin="375,0,-128,0"/>
 					</Grid>
 				</Border>
 				<Border BorderThickness="5" BorderBrush="#FF0BBBAB"  CornerRadius="10,10,10,10" x:Name="top_Copy1" Margin="454,10,10,563" Background="#FF0BBBAB">
