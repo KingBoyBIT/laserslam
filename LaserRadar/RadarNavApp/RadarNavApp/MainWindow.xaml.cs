@@ -33,6 +33,7 @@ namespace MetroWPF
 		RadarData rd;
 
 		AsyncOperation asyncOperation;
+		AsyncOperation asyncOperation2;
 
 		public MainWindow()
 		{
@@ -110,6 +111,31 @@ namespace MetroWPF
 				data_rc.Text = "";
 			}
 		}
+		void ShowPic(object s)
+		{
+			List<RadarData> data = (List<RadarData>)s;
+			for (int i = 0; i < data.Count; i++)
+			{
+				double[] realangles = data[i].getrealAngle();
+				double[] distance = data[i].getdis();
+				for (int j = 0; j < realangles.Length; j++)
+				{
+					double x = Math.Cos(realangles[j] / 180 * Math.PI) * distance[j] / 1000;
+					double y = Math.Sin(realangles[j] / 180 * Math.PI) * distance[j] / 1000;
+					var pt = new Ellipse();
+					pt.SetValue(Canvas.LeftProperty, (double)x);
+					pt.SetValue(Canvas.TopProperty, (double)y);
+					pt.Height = 10;
+					pt.Width = 10;
+					pt.Margin = new Thickness(20, 20, 0, 0);
+					pt.Stroke = new SolidColorBrush(Colors.Red);
+
+					//this.PaintCanvas.Children.Add(pt);
+				}
+				
+			}
+
+		}
 
 		public void ReciveData()
 		{
@@ -143,9 +169,17 @@ namespace MetroWPF
 						byte[] tmpdata = recivedatalst.ToArray();
 						rd = new RadarData();
 						rd.BuildRadarData(tmpdata);
-										
+						if (RadataLst.Count>(int)(360/21))
+						{
+							RadataLst.RemoveAt(0);
+							RadataLst.Add(rd);
+						}
+						else
+						{
+							RadataLst.Add(rd);
+						}
 						asyncOperation.Post(new SendOrPostCallback(ShowReciveDataText), Common.bytes2HexString(ref tmpdata, tmpdata.Length));
-
+						asyncOperation.Post(new SendOrPostCallback(ShowPic), RadataLst);
 					}
 					else
 					{
@@ -171,6 +205,7 @@ namespace MetroWPF
 
 			//sp.Read(recived_data, 0, sp.ReceivedBytesThreshold);
 			asyncOperation = AsyncOperationManager.CreateOperation(null);
+			asyncOperation2 = AsyncOperationManager.CreateOperation(null);
 			ThreadStart start = new ThreadStart(ReciveData);
 			Thread t1 = new Thread(start);  //创建子线程，循环刷新label1
 			
@@ -180,14 +215,6 @@ namespace MetroWPF
 				startrecivedata = true;
 				t1.Start(); //线程开始
 			}
-
-			var myPoint = new Ellipse();
-			myPoint.Height = 1;
-			myPoint.Width = 1;
-			myPoint.Margin = new Thickness(5, 5, 0, 0);
-			myPoint.Stroke = new SolidColorBrush(Colors.Red);
-			PaintCanvas.Children.Add(myPoint);
-
 		}
 
 		private void StopReciveDataBtn_Click(object sender, RoutedEventArgs e)
