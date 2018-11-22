@@ -40,7 +40,9 @@
 						<Button x:Name="ClearWindowBtn" Content="清屏" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" BorderBrush="#FFE8723C" Background="#FFE8723C" Foreground="White" BorderThickness="1" Margin="250,0,-3,0" Click="ClearWindowBtn_Click"/>
 					</Grid>
 				</Border>
-				<Border BorderThickness="5" BorderBrush="#FF0BBBAB"  CornerRadius="10,10,10,10" x:Name="top_Copy1" Margin="454,10,10,563" Background="#FF0BBBAB"/>
+				<Border BorderThickness="5" BorderBrush="#FF0BBBAB"  CornerRadius="10,10,10,10" x:Name="top_Copy1" Margin="454,10,10,563" Background="#FF0BBBAB">
+					<Canvas Name="PaintCanvas" Margin="9,5,5,5"/>
+				</Border>
 
 
 				<!--</StackPanel>-->

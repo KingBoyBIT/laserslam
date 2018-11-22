@@ -180,6 +180,14 @@ namespace MetroWPF
 				startrecivedata = true;
 				t1.Start(); //线程开始
 			}
+
+			var myPoint = new Ellipse();
+			myPoint.Height = 1;
+			myPoint.Width = 1;
+			myPoint.Margin = new Thickness(5, 5, 0, 0);
+			myPoint.Stroke = new SolidColorBrush(Colors.Red);
+			PaintCanvas.Children.Add(myPoint);
+
 		}
 
 		private void StopReciveDataBtn_Click(object sender, RoutedEventArgs e)
