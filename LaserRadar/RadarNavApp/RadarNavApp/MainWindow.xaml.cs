@@ -185,7 +185,7 @@ namespace MetroWPF
 							RadataLst.Add(rd);
 						}
 						asyncOperation.Post(new SendOrPostCallback(ShowReciveDataText), Common.bytes2HexString(ref tmpdata, tmpdata.Length));
-						//asyncOperation.Post(new SendOrPostCallback(ShowPic), RadataLst);
+						
 						
 					}
 					else
