@@ -208,6 +208,7 @@ namespace MetroWPF
 				this.ShowMessageAsync(null, "未打开串口");
 				return;
 			}
+
 			//byte[] recived_data = new byte[5000];
 
 			//sp.Read(recived_data, 0, sp.ReceivedBytesThreshold);
